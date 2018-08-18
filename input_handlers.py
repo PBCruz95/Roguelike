@@ -4,14 +4,24 @@ from game_states import GameStates
 
 
 def handle_keys(user_input, game_state):
-    if game_state == GameStates.PLAYERS_TURN:
-        return handle_player_turn_keys(user_input)
+    if user_input:
+        if game_state == GameStates.PLAYERS_TURN:
+            return handle_player_turn_keys(user_input)
+        elif game_state == GameStates.PLAYER_DEAD:
+            return handle_player_dead_keys(user_input)
+        elif game_state == GameStates.TARGETING:
+            return handle_targeting_keys(user_input)
+        elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+            return handle_inventory_keys(user_input)
 
-    elif game_state == GameStates.PLAYER_DEAD:
-        return handle_player_dead_keys(user_input)
+    # No key pressed
+    return {}
 
-    elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
-        return handle_inventory_keys(user_input)
+# Targeting keys
+def handle_targeting_keys(user_input):
+    # Exit the game
+    if user_input.key == 'ESCAPE':
+        return {'exit': True}
 
     # No key pressed
     return {}
@@ -95,4 +105,16 @@ def handle_player_dead_keys(user_input):
         return {'exit': True}
 
     # No key pressed
+    return {}
+
+# Mouse events
+def handle_mouse(mouse_event):
+    if mouse_event:
+        (x, y) = mouse_event.cell
+
+        if mouse_event.button == 'LEFT':
+            return {'left_click': (x, y)}
+        elif mouse_event.button == 'RIGHT':
+            return {'right_click': (x, y)}
+
     return {}
