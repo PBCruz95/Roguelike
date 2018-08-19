@@ -107,6 +107,20 @@ def handle_player_dead_keys(user_input):
     # No key pressed
     return {}
 
+# Main menu
+def handle_main_menu(user_input):
+    if user_input:
+        key_char = user_input.char
+
+        if key_char == 'a':
+            return {'new_game': True}
+        elif key_char == 'b':
+            return {'load_game': True}
+        elif key_char == 'c' or user_input.key == 'ESCAPE':
+            return {'exit': True}
+
+    return {}
+
 # Mouse events
 def handle_mouse(mouse_event):
     if mouse_event:
