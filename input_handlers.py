@@ -13,6 +13,10 @@ def handle_keys(user_input, game_state):
             return handle_targeting_keys(user_input)
         elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
             return handle_inventory_keys(user_input)
+        elif game_state == GameStates.LEVEL_UP:
+            return handle_level_up_menu(user_input)
+        elif game_state == GameStates.CHARACTER_SCREEN:
+            return handle_character_screen(user_input)
 
     # No key pressed
     return {}
@@ -69,14 +73,24 @@ def handle_player_turn_keys(user_input):
         return {'move': (-1, 1)}
     elif key_char == 'c':
         return{'move': (1, 1)}
+    elif key_char == 'x':
+        return {'wait': True}
 
     # Item management
-    if key_char == 'g':
+    if key_char == 'f':
         return{'pickup': True}
-    elif key_char == 'i':
+    elif user_input.key == 'TAB':
         return{'show_inventory': True}
-    elif key_char == 'o':
+    elif key_char == 'g':
         return{'drop_inventory': True}
+
+    # Take stairs to next level
+    elif user_input.key == 'SPACE':
+        return {'take_stairs': True}
+
+    # View character stats
+    elif user_input.key == 'ALT':
+        return {'show_character_screen': True}
 
     # Alt+Enter: toggle full screen
     if user_input.key == 'ENTER' and user_input.alt:
@@ -112,12 +126,35 @@ def handle_main_menu(user_input):
     if user_input:
         key_char = user_input.char
 
-        if key_char == 'a':
+        if user_input.key == 'ENTER' and user_input.alt:
+            return {'fullscreen': True}
+        elif key_char == 'a':
             return {'new_game': True}
         elif key_char == 'b':
             return {'load_game': True}
         elif key_char == 'c' or user_input.key == 'ESCAPE':
             return {'exit': True}
+
+    return {}
+
+# Level up menu
+def handle_level_up_menu(user_input):
+    if user_input:
+        key_char = user_input.char
+
+        if key_char == 'a':
+            return {'level_up': 'hp'}
+        elif key_char == 'b':
+            return {'level_up': 'str'}
+        elif key_char == 'c':
+            return {'level_up': 'def'}
+
+    return {}
+
+# Charcter stats screen
+def handle_character_screen(user_input):
+    if user_input.key == 'ESCAPE':
+        return {'exit': True}
 
     return {}
 
