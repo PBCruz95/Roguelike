@@ -227,6 +227,7 @@ def play_game(player, entities, game_map, message_log, game_state, root_console,
 
             if targeting_cancelled:
                 game_state = previous_game_state
+                message_log.add_message(Message('Targeting cancelled'))
 
             if xp:
                 leveled_up = player.level.add_xp(xp)
@@ -239,7 +240,6 @@ def play_game(player, entities, game_map, message_log, game_state, root_console,
                     previous_game_state = game_state
                     game_state = GameStates.LEVEL_UP
 
-                message_log.add_message(Message('Targeting cancelled'))
 
         # Enemies' Turn
         if game_state == GameStates.ENEMY_TURN:
