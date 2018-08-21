@@ -45,8 +45,8 @@ def handle_inventory_keys(user_input):
     if user_input.key == 'ENTER' and user_input.alt:
         return {'fullscreen': True}
 
-    # Exit the game    
-    elif user_input.key == 'ESCAPE':
+    # Exit inventory view   
+    elif user_input.key == 'ESCAPE' or user_input.key == 'TAB':
         return {'exit': True}
 
     # No key pressed
@@ -79,10 +79,10 @@ def handle_player_turn_keys(user_input):
     # Item management
     if key_char == 'f':
         return{'pickup': True}
+    elif user_input.key == 'TAB' and user_input.shift:
+        return{'drop_inventory': True}
     elif user_input.key == 'TAB':
         return{'show_inventory': True}
-    elif key_char == 'g':
-        return{'drop_inventory': True}
 
     # Take stairs to next level
     elif user_input.key == 'SPACE':

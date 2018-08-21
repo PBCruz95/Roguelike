@@ -88,11 +88,11 @@ def render_all(con, panel, entities, player, game_map, fov_recompute, root_conso
     # Inventory management
     if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
         if game_state == GameStates.SHOW_INVENTORY:
-            inventory_title = 'Press the key next to an item to use it, or Esc to cancel.\n'
+            inventory_title = 'Press the key next to an item to use it. Press Esc or Tab to cancel.\n'
         else:
-            inventory_title = 'Press the key next to an item to drop it, or Esc to cancel.\n'
+            inventory_title = 'Press the key next to an item to drop it. Press Esc or Tab to cancel.\n'
 
-        inventory_menu(con, root_console, inventory_title, player.inventory, 50, screen_width, screen_height)
+        inventory_menu(con, root_console, inventory_title, player, 50, screen_width, screen_height)
 
     # Level up
     elif game_state == GameStates.LEVEL_UP:
